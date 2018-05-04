@@ -37,6 +37,8 @@ class neuralNetwork :
         # link weight matrices,wih and who
         self.wih = numpy.random.normal(0.0,pow(self.hnodes,-0.5),(self.hnodes,self.inodes))
         self.who = numpy.random.normal(0.0,pow(self.onodes,-0.5),(self.onodes,self.hnodes))
+        # self.wih = numpy.load("C:\\Users\\fansiguo\\Desktop\\data\\wih.npy")
+        # self.who = numpy.load("C:\\Users\\fansiguo\\Desktop\\data\\who.npy")
         #learning rate
         self.lr = learningrate
 
@@ -65,7 +67,7 @@ class neuralNetwork :
 
         # update the weights for the links between the input and hidden layers
         self.wih += self.lr * numpy.dot((hidden_errors * hidden_outputs * (1.0 - hidden_outputs)),numpy.transpose(inputs))
-        pass
+        return self.who,self.wih
 
     # query the neural network
     def query(self,inputs_list):
@@ -78,24 +80,31 @@ class neuralNetwork :
 
 def main():
     input_nodes = 784
-    hidden_nodes = 100
+    hidden_nodes = 300
     output_nodes = 10
 
     learning_rate = 0.3
     n = neuralNetwork(input_nodes,hidden_nodes,output_nodes,learning_rate)
 
+    # begin training neural network
     training_data_file = open('C:\\Users\\fansiguo\\Desktop\\data\\mnist_train.csv','r')
     training_data_list = training_data_file.readlines()
     training_data_file.close()
-
     epochs = 10
+    who =  []
+    wih = []
     for e in range(epochs):
         for record in training_data_list:
             all_values = record.split(',')
             inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
             targets = numpy.zeros(output_nodes) + 0.01
             targets[int(all_values[0])] = 0.99
-            n.train(inputs,targets)
+            who,wih = n.train(inputs,targets)
+    numpy.save("C:\\Users\\fansiguo\\Desktop\\data\\who.npy",who)
+    numpy.save("C:\\Users\\fansiguo\\Desktop\\data\\wih.npy", wih)
+
+    # end training neural network
+
 
     # test neural network
     # test_data_file = open('C:\\Users\\fansiguo\\Desktop\\data\\mnist_test.csv','r')
@@ -138,7 +147,7 @@ def main():
         our_own_dataset.append(record)
         pass
 
-    item = 1
+    item = 3
 
     plt.imshow(our_own_dataset[item][1:].reshape(28,28),cmap='Greys',interpolation='None')
 
