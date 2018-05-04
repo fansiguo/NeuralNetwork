@@ -1,2 +1,2 @@
-# NeuralNetwork
+# Neural Network
 Neural network
