@@ -5,7 +5,7 @@
 #
 #        USAGE: ./image_read.py
 #
-#  DESCRIPTION: 根据用户配置规则，计算SKU维度的数据详情。
+#  DESCRIPTION: 
 #
 #      OPTIONS: ---
 # REQUIREMENTS: ---
