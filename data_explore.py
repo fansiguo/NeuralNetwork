@@ -5,7 +5,7 @@
 #
 #        USAGE: ./data_explore.py
 #
-#  DESCRIPTION: 根据用户配置规则，计算SKU维度的数据详情。
+#  DESCRIPTION: 数据探索
 #
 #      OPTIONS: ---
 # REQUIREMENTS: ---
